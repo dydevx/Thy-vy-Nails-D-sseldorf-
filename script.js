@@ -44,3 +44,61 @@ lightbox.querySelector(".lightbox-close").addEventListener("click", () => lightb
 lightbox.addEventListener("click", event => {
   if (event.target === lightbox) lightbox.close();
 });
+
+const appointmentForm = document.querySelector("#appointment-form");
+const bookingPreview = document.querySelector("#booking-preview");
+const previewMessage = document.querySelector("#preview-message");
+const formStatus = document.querySelector("#form-status");
+const appointmentDate = appointmentForm.querySelector('[name="date"]');
+appointmentDate.min = new Date().toISOString().split("T")[0];
+
+const requiredBookingFields = ["name", "service", "date", "time"];
+
+const formatGermanDate = value => {
+  if (!value) return "";
+  return new Intl.DateTimeFormat("de-DE", {
+    weekday: "long", day: "2-digit", month: "long", year: "numeric"
+  }).format(new Date(`${value}T12:00:00`));
+};
+
+const getBookingData = () => Object.fromEntries(new FormData(appointmentForm).entries());
+
+const buildBookingMessage = data => {
+  const lines = [
+    "Hallo Thy & Vy Nails Düsseldorf,",
+    "ich möchte gerne einen Termin anfragen.",
+    "",
+    `Name: ${data.name}`,
+    `Dienstleistung: ${data.service}`,
+    `Wunschtermin: ${formatGermanDate(data.date)}`,
+    `Uhrzeit: ${data.time}`
+  ];
+  if (data.phone) lines.push(`Telefonnummer: ${data.phone}`);
+  if (data.message) lines.push(`Nachricht: ${data.message}`);
+  lines.push("", "Vielen Dank!");
+  return lines.join("\n");
+};
+
+const updateBookingPreview = () => {
+  const data = getBookingData();
+  const isComplete = requiredBookingFields.every(field => data[field]?.trim());
+  bookingPreview.hidden = !isComplete;
+  if (isComplete) previewMessage.textContent = buildBookingMessage(data);
+  if (formStatus.textContent) formStatus.textContent = "";
+};
+
+appointmentForm.addEventListener("input", updateBookingPreview);
+appointmentForm.addEventListener("change", updateBookingPreview);
+
+appointmentForm.addEventListener("submit", event => {
+  event.preventDefault();
+  appointmentForm.classList.add("was-validated");
+  if (!appointmentForm.checkValidity()) {
+    const firstInvalid = appointmentForm.querySelector(":invalid");
+    formStatus.textContent = "Bitte füllen Sie alle erforderlichen Felder aus.";
+    firstInvalid?.focus();
+    return;
+  }
+  const message = buildBookingMessage(getBookingData());
+  window.open(`https://wa.me/4921141651273?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+});

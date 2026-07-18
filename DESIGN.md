@@ -38,6 +38,7 @@ Mobile-first, with a content width of 1240 px and fluid side padding. Alternate 
 - Service groups use typography, thin dividers, and one shared image composition rather than repeated icon cards.
 - Gallery uses an irregular masonry-like grid and native dialog lightbox.
 - Booking band uses a committed primary-dark surface with champagne details.
+- The booking band contains an inline two-column WhatsApp appointment form. Its pale-eucalyptus form surface reveals a message preview only after all required fields are complete; the champagne action opens WhatsApp with a generated German request.
 - Floating WhatsApp action remains visible without obscuring content.
 - A champagne trust rail, low-opacity logo watermark, precise section rules, and subtle circular atelier motifs create a recognizable boutique identity without introducing new colors.
 

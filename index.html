@@ -134,14 +134,83 @@
       </div>
     </section>
 
-    <section class="booking section" id="termin">
-      <div class="booking-copy reveal"><p>Ihr nächster Termin</p><h2>Bereit für Ihre<br>neuen Nägel?</h2><span>Termine nur nach vorheriger Vereinbarung.</span></div>
-      <div class="booking-actions reveal">
-        <p>Vereinbaren Sie Ihren Termin schnell und unkompliziert per WhatsApp oder telefonisch.</p>
-        <a class="button button-light" href="https://wa.me/4921141651273?text=Hallo%20Thy%20%26%20Vy%20Nails%2C%20ich%20m%C3%B6chte%20gerne%20einen%20Termin%20vereinbaren." target="_blank" rel="noopener">Über WhatsApp buchen</a>
-        <a class="booking-phone" href="tel:+4915207876868"><span>Mobil anrufen</span>01520 7876868</a>
-        <a class="booking-phone" href="tel:+4921141656343"><span>Festnetz anrufen</span>0211 41656343</a>
+    <section class="booking booking-form-section section" id="termin">
+      <div class="booking-copy booking-intro reveal">
+        <img class="booking-emblem" src="logo.png" alt="" aria-hidden="true">
+        <p>Ihr nächster Termin</p>
+        <h2>Ihr<br>Wunschtermin</h2>
+        <p class="booking-description">Teilen Sie uns Ihren Wunsch mit – wir prüfen die Verfügbarkeit und bestätigen Ihren Termin schnellstmöglich per WhatsApp.</p>
+        <ul class="booking-trust">
+          <li><span aria-hidden="true">✓</span><div><strong>Persönliche Betreuung</strong><small>Individuell, aufmerksam und herzlich.</small></div></li>
+          <li><span aria-hidden="true">✓</span><div><strong>Hochwertige Produkte</strong><small>Für schöne Nägel mit gutem Gefühl.</small></div></li>
+          <li><span aria-hidden="true">✓</span><div><strong>Sauberkeit &amp; Hygiene</strong><small>Unser Atelier steht für höchste Standards.</small></div></li>
+        </ul>
+        <p class="booking-note">Termine nur nach vorheriger Vereinbarung.</p>
       </div>
+
+      <form class="appointment-form reveal" id="appointment-form" novalidate>
+        <div class="form-heading">
+          <p>Termin anfragen</p>
+          <h3>Ihre Angaben</h3>
+          <span>Mit <b>*</b> markierte Felder sind erforderlich.</span>
+        </div>
+        <div class="form-grid">
+          <label class="form-field">
+            <span>Name <b>*</b></span>
+            <input type="text" name="name" autocomplete="name" placeholder="Ihr Vor- und Nachname" required>
+            <small class="field-error">Bitte geben Sie Ihren Namen ein.</small>
+          </label>
+          <label class="form-field">
+            <span>Dienstleistung <b>*</b></span>
+            <select name="service" required>
+              <option value="">Bitte auswählen</option>
+              <option>Nagelmodellage – Neumodellage</option>
+              <option>Nagelmodellage – Auffüllen</option>
+              <option>French / Babyboomer</option>
+              <option>Maniküre</option>
+              <option>Maniküre mit Shellac</option>
+              <option>Pediküre</option>
+              <option>Pediküre mit Shellac</option>
+              <option>Individuelles Nageldesign</option>
+            </select>
+            <small class="field-error">Bitte wählen Sie eine Dienstleistung.</small>
+          </label>
+          <label class="form-field">
+            <span>Wunschtermin <b>*</b></span>
+            <input type="date" name="date" required>
+            <small class="field-error">Bitte wählen Sie ein Datum.</small>
+          </label>
+          <label class="form-field">
+            <span>Uhrzeit <b>*</b></span>
+            <select name="time" required>
+              <option value="">Bitte auswählen</option>
+              <option>09:00 Uhr</option><option>10:00 Uhr</option><option>11:00 Uhr</option>
+              <option>12:00 Uhr</option><option>13:00 Uhr</option><option>14:00 Uhr</option>
+              <option>15:00 Uhr</option><option>16:00 Uhr</option><option>17:00 Uhr</option>
+              <option>18:00 Uhr</option>
+            </select>
+            <small class="field-error">Bitte wählen Sie eine Uhrzeit.</small>
+          </label>
+          <label class="form-field">
+            <span>Telefonnummer <em>optional</em></span>
+            <input type="tel" name="phone" autocomplete="tel" placeholder="z. B. 01520 1234567">
+          </label>
+          <label class="form-field">
+            <span>Nachricht <em>optional</em></span>
+            <textarea name="message" rows="3" placeholder="Designwunsch, Länge oder besondere Hinweise"></textarea>
+          </label>
+        </div>
+
+        <div class="booking-preview" id="booking-preview" hidden aria-live="polite">
+          <div class="preview-title"><span aria-hidden="true">◉</span><strong>WhatsApp-Vorschau</strong></div>
+          <p id="preview-message"></p>
+        </div>
+        <p class="form-status" id="form-status" role="alert"></p>
+        <button class="booking-submit" type="submit">
+          <span>Termin über WhatsApp anfragen</span><span aria-hidden="true">↗</span>
+        </button>
+        <p class="booking-fallback">Lieber anrufen? <a href="tel:+4915207876868">01520 7876868</a> oder <a href="tel:+4921141656343">0211 41656343</a></p>
+      </form>
     </section>
 
     <section class="contact section" id="kontakt">

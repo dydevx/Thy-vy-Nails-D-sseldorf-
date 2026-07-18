@@ -153,3 +153,71 @@ footer{padding-top:clamp(3.5rem,7vw,6rem)}
   .brand-logo-footer{width:110px;height:110px}
   .brand-logo-footer img{width:110px;height:110px}
 }
+
+/* WhatsApp appointment form — approved direction A */
+.booking-form-section{display:grid;grid-template-columns:minmax(360px,.82fr) minmax(0,1.18fr);gap:clamp(2.5rem,5vw,5rem);align-items:start;padding-left:max(var(--pad),calc((100vw - var(--max))/2));padding-right:max(var(--pad),calc((100vw - var(--max))/2));background:var(--deep)}
+.booking-form-section:after{bottom:-42%;right:-14%;opacity:.7}
+.booking-intro{position:static;min-width:0;max-width:500px}
+.booking-emblem{width:100px;height:100px;margin-bottom:2rem;border-radius:50%;object-fit:cover;mix-blend-mode:screen;opacity:.92}
+.booking-intro>p:first-of-type{color:#d8c49a}
+.booking-intro h2{max-width:100%;margin:1rem 0 1.4rem;font-size:clamp(3rem,4.2vw,4rem);line-height:1.06;letter-spacing:-.035em;white-space:normal}
+.booking-description{max-width:42ch;color:#e3ebe9}
+.booking-trust{list-style:none;margin:2.4rem 0;padding:0;border-top:1px solid rgba(255,255,255,.24)}
+.booking-trust li{display:grid;grid-template-columns:44px 1fr;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.24);align-items:center}
+.booking-trust li>span{width:40px;height:40px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:#e2c987;font-weight:700}
+.booking-trust strong,.booking-trust small{display:block}
+.booking-trust strong{font-size:.9rem}
+.booking-trust small{margin-top:.15rem;color:#c8d6d3;font-size:.77rem;line-height:1.45}
+.booking-note{color:#dce7e5;font-size:.8rem}
+.appointment-form{width:100%;padding:clamp(1.4rem,3vw,2.5rem);background:var(--pale);color:var(--ink);border-top:3px solid var(--gold)}
+.form-heading{display:grid;grid-template-columns:1fr auto;align-items:end;padding-bottom:1.5rem;margin-bottom:1.5rem;border-bottom:1px solid rgba(63,98,94,.3)}
+.form-heading>p{grid-column:1/-1;margin:0;color:var(--deep);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em}
+.form-heading h3{margin:.4rem 0 0;font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.1;color:var(--deep)}
+.form-heading>span{font-size:.72rem;color:#52605e}
+.form-heading b,.form-field b{color:#8a5d12}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.15rem}
+.form-field{display:flex;flex-direction:column;gap:.45rem;min-width:0}
+.form-field>span{font-size:.8rem;font-weight:700;color:#354744}
+.form-field em{font-family:var(--sans);font-size:.7rem;font-style:normal;font-weight:500;color:#596966}
+.form-field input,.form-field select,.form-field textarea{width:100%;min-height:50px;border:1px solid #728b87;border-radius:0;background:#fff;color:var(--ink);padding:.75rem .85rem;font:inherit;font-size:.88rem;outline:0;transition:border-color .2s,box-shadow .2s}
+.form-field textarea{resize:vertical;min-height:92px;line-height:1.5}
+.form-field input::placeholder,.form-field textarea::placeholder{color:#5f6968;opacity:1}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--deep);box-shadow:0 0 0 3px rgba(63,98,94,.18)}
+.field-error{display:none;color:#7d241e;font-size:.7rem;line-height:1.4}
+.appointment-form.was-validated :invalid{border-color:#9d3931}
+.appointment-form.was-validated :invalid + .field-error{display:block}
+.booking-preview{margin-top:1.5rem;padding:1.2rem 1.3rem;background:#f8faf9;border:1px solid var(--green)}
+.booking-preview[hidden]{display:none}
+.preview-title{display:flex;align-items:center;gap:.65rem;color:var(--deep)}
+.preview-title>span{width:32px;height:32px;border:1px solid var(--green);border-radius:50%;display:grid;place-items:center}
+.preview-title strong{font-size:.84rem}
+.booking-preview p{margin:.8rem 0 0;padding-left:2.65rem;white-space:pre-line;font-size:.78rem;line-height:1.55;color:#35413f}
+.form-status{min-height:1.4rem;margin:.65rem 0;color:#7d241e;font-size:.78rem;font-weight:700}
+.booking-submit{width:100%;min-height:58px;border:0;border-radius:0;background:var(--gold);color:#222c2a;display:flex;justify-content:center;align-items:center;gap:.8rem;padding:.9rem 1.25rem;font-weight:800;cursor:pointer;transition:transform .25s var(--ease),background .25s}
+.booking-submit:hover{transform:translateY(-2px);background:#d5b97f}
+.booking-submit:focus-visible{outline-color:#fff}
+.booking-fallback{margin:1rem 0 0;text-align:center;font-size:.75rem;color:#52605e}
+.booking-fallback a{color:var(--deep);font-weight:700;border-bottom:1px solid currentColor}
+@media(max-width:1100px){
+  .booking-form-section{grid-template-columns:minmax(330px,.8fr) minmax(0,1.2fr);gap:2.5rem}
+  .booking-emblem{width:84px;height:84px}
+}
+@media(max-width:900px){
+  .booking-form-section{grid-template-columns:1fr}
+  .booking-intro{position:static;max-width:680px}
+  .booking-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;border:0}
+  .booking-trust li{display:block;border:0;padding:0}
+  .booking-trust li>span{margin-bottom:.7rem}
+}
+@media(max-width:680px){
+  .booking-form-section{padding-left:var(--pad);padding-right:var(--pad)}
+  .booking-emblem{width:72px;height:72px;margin-bottom:1.2rem}
+  .booking-intro h2{font-size:clamp(2.7rem,13vw,4rem)}
+  .booking-trust{grid-template-columns:1fr}
+  .booking-trust li{display:grid;grid-template-columns:40px 1fr;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.2)}
+  .form-heading{display:block}
+  .form-heading>span{display:block;margin-top:.75rem}
+  .form-grid{grid-template-columns:1fr}
+  .appointment-form{padding:1.15rem}
+  .booking-preview p{padding-left:0}
+}
