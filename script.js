@@ -100,5 +100,5 @@ appointmentForm.addEventListener("submit", event => {
     return;
   }
   const message = buildBookingMessage(getBookingData());
-  window.open(`https://wa.me/4921141651273?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+  window.open(`https://wa.me/4915207876868?text=${encodeURIComponent(message)}`, "_blank", "noopener");
 });
