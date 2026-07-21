@@ -48,7 +48,7 @@
           <i aria-hidden="true">↘</i>
         </a>
         <div class="hero-actions">
-          <a class="button" href="https://wa.me/4915207876868?text=Hallo%20Thy%20%26%20Vy%20Nails%2C%20ich%20m%C3%B6chte%20gerne%20einen%20Termin%20vereinbaren." target="_blank" rel="noopener">Termin über WhatsApp</a>
+          <a class="button" href="#termin">Termin buchen <span aria-hidden="true">↓</span></a>
           <a class="text-link" href="#preise">Preisliste ansehen <span aria-hidden="true">↓</span></a>
         </div>
       </div>
@@ -200,21 +200,25 @@
             <input type="text" name="name" autocomplete="name" placeholder="Ihr Vor- und Nachname" required>
             <small class="field-error">Bitte geben Sie Ihren Namen ein.</small>
           </label>
-          <label class="form-field">
-            <span>Dienstleistung <b>*</b></span>
-            <select name="service" required>
-              <option value="">Bitte auswählen</option>
-              <option>Nagelmodellage – Neumodellage</option>
-              <option>Nagelmodellage – Auffüllen</option>
-              <option>French / Babyboomer</option>
-              <option>Maniküre</option>
-              <option>Maniküre mit Shellac</option>
-              <option>Pediküre</option>
-              <option>Pediküre mit Shellac</option>
-              <option>Individuelles Nageldesign</option>
-            </select>
-            <small class="field-error">Bitte wählen Sie eine Dienstleistung.</small>
-          </label>
+          <fieldset class="form-field service-field" id="service-field">
+            <legend>Dienstleistungen <b>*</b></legend>
+            <span class="service-hint">Mehrfachauswahl möglich</span>
+            <div class="service-options">
+              <label><input type="checkbox" name="service" value="Nagelmodellage – Neumodellage"><span>Nagelmodellage – Neumodellage</span></label>
+              <label><input type="checkbox" name="service" value="Nagelmodellage – Auffüllen"><span>Nagelmodellage – Auffüllen</span></label>
+              <label><input type="checkbox" name="service" value="French / Babyboomer"><span>French / Babyboomer</span></label>
+              <label><input type="checkbox" name="service" value="Maniküre"><span>Maniküre</span></label>
+              <label><input type="checkbox" name="service" value="Maniküre mit Nagellack"><span>Maniküre mit Nagellack</span></label>
+              <label><input type="checkbox" name="service" value="Maniküre mit Shellac"><span>Maniküre mit Shellac</span></label>
+              <label><input type="checkbox" name="service" value="Pediküre"><span>Pediküre</span></label>
+              <label><input type="checkbox" name="service" value="Pediküre mit Nagellack"><span>Pediküre mit Nagellack</span></label>
+              <label><input type="checkbox" name="service" value="Pediküre mit Shellac"><span>Pediküre mit Shellac</span></label>
+              <label><input type="checkbox" name="service" value="Ablösung"><span>Ablösung</span></label>
+              <label><input type="checkbox" name="service" value="Individuelles Nageldesign"><span>Individuelles Nageldesign</span></label>
+              <label><input type="checkbox" name="service" value="Extra Länge / Strasssteinchen"><span>Extra Länge / Strasssteinchen</span></label>
+            </div>
+            <small class="field-error service-error">Bitte wählen Sie mindestens eine Dienstleistung.</small>
+          </fieldset>
           <label class="form-field">
             <span>Wunschtermin <b>*</b></span>
             <input type="date" name="date" required>

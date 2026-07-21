@@ -177,9 +177,21 @@ footer{padding-top:clamp(3.5rem,7vw,6rem)}
 .form-heading b,.form-field b{color:#8a5d12}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.15rem}
 .form-field{display:flex;flex-direction:column;gap:.45rem;min-width:0}
+.service-field{grid-column:1/-1;margin:0;padding:0;border:0}
+.service-field legend{padding:0;font-size:.8rem;font-weight:700;color:#354744}
+.service-hint{margin-top:-.2rem;font-size:.72rem;color:#52605e}
+.service-options{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-top:.25rem}
+.service-options label{min-height:46px;display:flex;align-items:center;gap:.65rem;padding:.65rem .75rem;background:#fff;border:1px solid #728b87;cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s}
+.service-options label:has(input:checked){border-color:var(--deep);background:#edf4f2;box-shadow:inset 3px 0 0 var(--deep)}
+.service-options label:focus-within{border-color:var(--deep);box-shadow:0 0 0 3px rgba(63,98,94,.18)}
+.service-options label{min-width:0}
+.service-options span{min-width:0;overflow-wrap:anywhere;font-size:.78rem;line-height:1.35;color:#354744}
+.service-field.is-invalid .service-options label{border-color:#9d3931}
+.service-field.is-invalid .service-error{display:block}
 .form-field>span{font-size:.8rem;font-weight:700;color:#354744}
 .form-field em{font-family:var(--sans);font-size:.7rem;font-style:normal;font-weight:500;color:#596966}
 .form-field input,.form-field select,.form-field textarea{width:100%;min-height:50px;border:1px solid #728b87;border-radius:0;background:#fff;color:var(--ink);padding:.75rem .85rem;font:inherit;font-size:.88rem;outline:0;transition:border-color .2s,box-shadow .2s}
+.service-field .service-options input[type="checkbox"]{appearance:auto;width:18px;height:18px;min-width:18px;min-height:18px;margin:0;padding:0;border:0;box-shadow:none;accent-color:var(--deep);flex:0 0 18px}
 .form-field textarea{resize:vertical;min-height:92px;line-height:1.5}
 .form-field input::placeholder,.form-field textarea::placeholder{color:#5f6968;opacity:1}
 .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--deep);box-shadow:0 0 0 3px rgba(63,98,94,.18)}
@@ -218,6 +230,7 @@ footer{padding-top:clamp(3.5rem,7vw,6rem)}
   .form-heading{display:block}
   .form-heading>span{display:block;margin-top:.75rem}
   .form-grid{grid-template-columns:1fr}
+  .service-options{grid-template-columns:1fr}
   .appointment-form{padding:1.15rem}
   .booking-preview p{padding-left:0}
 }

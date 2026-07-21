@@ -52,7 +52,8 @@ const formStatus = document.querySelector("#form-status");
 const appointmentDate = appointmentForm.querySelector('[name="date"]');
 appointmentDate.min = new Date().toISOString().split("T")[0];
 
-const requiredBookingFields = ["name", "service", "date", "time"];
+const requiredBookingFields = ["name", "date", "time"];
+const serviceField = appointmentForm.querySelector("#service-field");
 
 const formatGermanDate = value => {
   if (!value) return "";
@@ -61,7 +62,13 @@ const formatGermanDate = value => {
   }).format(new Date(`${value}T12:00:00`));
 };
 
-const getBookingData = () => Object.fromEntries(new FormData(appointmentForm).entries());
+const getBookingData = () => {
+  const formData = new FormData(appointmentForm);
+  return {
+    ...Object.fromEntries(formData.entries()),
+    services: formData.getAll("service")
+  };
+};
 
 const buildBookingMessage = data => {
   const lines = [
@@ -69,7 +76,7 @@ const buildBookingMessage = data => {
     "ich möchte gerne einen Termin anfragen.",
     "",
     `Name: ${data.name}`,
-    `Dienstleistung: ${data.service}`,
+    `Dienstleistungen: ${data.services.join(", ")}`,
     `Wunschtermin: ${formatGermanDate(data.date)}`,
     `Uhrzeit: ${data.time}`
   ];
@@ -81,7 +88,9 @@ const buildBookingMessage = data => {
 
 const updateBookingPreview = () => {
   const data = getBookingData();
-  const isComplete = requiredBookingFields.every(field => data[field]?.trim());
+  const isComplete = requiredBookingFields.every(field => data[field]?.trim()) && data.services.length > 0;
+  serviceField.classList.toggle("is-invalid", appointmentForm.classList.contains("was-validated") && data.services.length === 0);
+  serviceField.setAttribute("aria-invalid", String(data.services.length === 0));
   bookingPreview.hidden = !isComplete;
   if (isComplete) previewMessage.textContent = buildBookingMessage(data);
   if (formStatus.textContent) formStatus.textContent = "";
@@ -93,12 +102,16 @@ appointmentForm.addEventListener("change", updateBookingPreview);
 appointmentForm.addEventListener("submit", event => {
   event.preventDefault();
   appointmentForm.classList.add("was-validated");
-  if (!appointmentForm.checkValidity()) {
-    const firstInvalid = appointmentForm.querySelector(":invalid");
+  const data = getBookingData();
+  const servicesValid = data.services.length > 0;
+  serviceField.classList.toggle("is-invalid", !servicesValid);
+  serviceField.setAttribute("aria-invalid", String(!servicesValid));
+  if (!appointmentForm.checkValidity() || !servicesValid) {
+    const firstInvalid = appointmentForm.querySelector(":invalid") || (!servicesValid ? serviceField.querySelector('input[name="service"]') : null);
     formStatus.textContent = "Bitte füllen Sie alle erforderlichen Felder aus.";
     firstInvalid?.focus();
     return;
   }
-  const message = buildBookingMessage(getBookingData());
+  const message = buildBookingMessage(data);
   window.open(`https://wa.me/4915207876868?text=${encodeURIComponent(message)}`, "_blank", "noopener");
 });
