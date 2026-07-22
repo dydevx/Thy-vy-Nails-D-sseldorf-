@@ -53,7 +53,38 @@ const appointmentDate = appointmentForm.querySelector('[name="date"]');
 appointmentDate.min = new Date().toISOString().split("T")[0];
 
 const requiredBookingFields = ["name", "date", "time"];
-const serviceField = appointmentForm.querySelector("#service-field");
+const serviceInputs = [...document.querySelectorAll(".price-option input")];
+const cartCount = document.querySelector("#cart-count");
+const cartTotal = document.querySelector("#cart-total");
+const continueBooking = document.querySelector("#continue-booking");
+const selectedServices = document.querySelector("#selected-services");
+const selectedServicesList = document.querySelector("#selected-services-list");
+
+const formatPrice = value => new Intl.NumberFormat("de-DE", {
+  style: "currency", currency: "EUR", minimumFractionDigits: value % 1 ? 2 : 0
+}).format(value);
+
+const getSelectedServices = () => serviceInputs.filter(input => input.checked).map(input => ({
+  name: input.dataset.service,
+  price: input.dataset.price === "" ? null : Number(input.dataset.price)
+}));
+
+const getServiceTotal = services => services.reduce((total, service) => total + (service.price || 0), 0);
+
+const updateServiceCart = () => {
+  const services = getSelectedServices();
+  const total = getServiceTotal(services);
+  const hasQuoteItem = services.some(service => service.price === null);
+  cartCount.textContent = services.length ? `${services.length} ${services.length === 1 ? "Leistung" : "Leistungen"} gewählt` : "Noch keine Leistung gewählt";
+  cartTotal.textContent = `Gesamt ab ${formatPrice(total)}${hasQuoteItem ? " + Preis auf Anfrage" : ""}`;
+  selectedServicesList.textContent = services.length
+    ? `${services.map(service => service.name).join(", ")} · ab ${formatPrice(total)}${hasQuoteItem ? " + Preis auf Anfrage" : ""}`
+    : "Bitte wählen Sie zuerst eine Leistung aus der Preisliste.";
+  selectedServices.classList.toggle("is-invalid", appointmentForm.classList.contains("was-validated") && services.length === 0);
+  continueBooking.classList.toggle("is-disabled", services.length === 0);
+  continueBooking.setAttribute("aria-disabled", String(services.length === 0));
+  updateBookingPreview();
+};
 
 const formatGermanDate = value => {
   if (!value) return "";
@@ -64,9 +95,12 @@ const formatGermanDate = value => {
 
 const getBookingData = () => {
   const formData = new FormData(appointmentForm);
+  const services = getSelectedServices();
   return {
     ...Object.fromEntries(formData.entries()),
-    services: formData.getAll("service")
+    services,
+    total: getServiceTotal(services),
+    hasQuoteItem: services.some(service => service.price === null)
   };
 };
 
@@ -76,7 +110,10 @@ const buildBookingMessage = data => {
     "ich möchte gerne einen Termin anfragen.",
     "",
     `Name: ${data.name}`,
-    `Dienstleistungen: ${data.services.join(", ")}`,
+    "Gewählte Leistungen:",
+    ...data.services.map(service => `• ${service.name}${service.price === null ? " (Preis auf Anfrage)" : ` (ab ${formatPrice(service.price)})`}`),
+    `Gesamt: ab ${formatPrice(data.total)}${data.hasQuoteItem ? " + Preis auf Anfrage" : ""}`,
+    "",
     `Wunschtermin: ${formatGermanDate(data.date)}`,
     `Uhrzeit: ${data.time}`
   ];
@@ -89,8 +126,7 @@ const buildBookingMessage = data => {
 const updateBookingPreview = () => {
   const data = getBookingData();
   const isComplete = requiredBookingFields.every(field => data[field]?.trim()) && data.services.length > 0;
-  serviceField.classList.toggle("is-invalid", appointmentForm.classList.contains("was-validated") && data.services.length === 0);
-  serviceField.setAttribute("aria-invalid", String(data.services.length === 0));
+  selectedServices.classList.toggle("is-invalid", appointmentForm.classList.contains("was-validated") && data.services.length === 0);
   bookingPreview.hidden = !isComplete;
   if (isComplete) previewMessage.textContent = buildBookingMessage(data);
   if (formStatus.textContent) formStatus.textContent = "";
@@ -98,20 +134,28 @@ const updateBookingPreview = () => {
 
 appointmentForm.addEventListener("input", updateBookingPreview);
 appointmentForm.addEventListener("change", updateBookingPreview);
+serviceInputs.forEach(input => input.addEventListener("change", updateServiceCart));
+continueBooking.addEventListener("click", event => {
+  if (!getSelectedServices().length) {
+    event.preventDefault();
+    document.querySelector(".price-option input")?.focus();
+  }
+});
 
 appointmentForm.addEventListener("submit", event => {
   event.preventDefault();
   appointmentForm.classList.add("was-validated");
   const data = getBookingData();
   const servicesValid = data.services.length > 0;
-  serviceField.classList.toggle("is-invalid", !servicesValid);
-  serviceField.setAttribute("aria-invalid", String(!servicesValid));
+  selectedServices.classList.toggle("is-invalid", !servicesValid);
   if (!appointmentForm.checkValidity() || !servicesValid) {
-    const firstInvalid = appointmentForm.querySelector(":invalid") || (!servicesValid ? serviceField.querySelector('input[name="service"]') : null);
-    formStatus.textContent = "Bitte füllen Sie alle erforderlichen Felder aus.";
+    const firstInvalid = !servicesValid ? document.querySelector(".price-option input") : appointmentForm.querySelector(":invalid");
+    formStatus.textContent = servicesValid ? "Bitte füllen Sie alle erforderlichen Felder aus." : "Bitte wählen Sie mindestens eine Leistung aus der Preisliste.";
     firstInvalid?.focus();
     return;
   }
   const message = buildBookingMessage(data);
   window.open(`https://wa.me/4915207876868?text=${encodeURIComponent(message)}`, "_blank", "noopener");
 });
+
+updateServiceCart();
